@@ -1,0 +1,25 @@
+.TodoInput {
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid #787878;
+}
+
+.TodoInput input {
+  flex-grow: 1;
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: #787878;
+  letter-spacing: .25px;
+}
+
+.TodoInput button {
+  border: none;
+  font-size: 22px;
+  padding: 0 15px 0 0;
+  cursor: pointer;
+  color: #787878;
+}
