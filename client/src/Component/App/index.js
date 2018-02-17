@@ -26,10 +26,33 @@ class App extends Component {
     return body;
   };
 
+  addTodo = (description) => {
+    const newTodo = {
+      description,
+      id: this.state.todos.length,
+      status: "Not Started"
+    }
+
+    this.setState({
+      todos: this.state.todos.concat( [newTodo] )
+    });
+
+    fetch('/create-todo', {
+      method: 'POST',
+      body: JSON.stringify(newTodo),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+  }
+
   render() {
     return (
       <div className="App">
-        <TodoInput></TodoInput>
+        <TodoInput addTodo={ this.addTodo.bind(this) }></TodoInput>
         <TodoList list={ this.state.todos }></TodoList>
       </div>
     );

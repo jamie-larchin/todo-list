@@ -4,23 +4,30 @@ import './style.css';
 class TodoInput extends Component {
   constructor() {
     super();
-    this.state = {value: 'Add a ToDo item'};
 
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { value: '' };
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChange = (event) => {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    this.props.addTodo(this.state.value);
+
+    this.setState({ value: '' });
   }
 
   render() {
     return (
-      <div className="TodoInput">
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
+      <form className="TodoInput" onSubmit={ this.handleSubmit }>
+        <input type="text" placeholder="Add a ToDo item" value={ this.state.value } onChange={ this.handleChange } />
         <button type="submit">
           <i className="fas fa-plus"></i>
         </button>
-      </div>
+      </form>
     );
   }
 }
