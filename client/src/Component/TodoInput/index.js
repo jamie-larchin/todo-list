@@ -23,7 +23,12 @@ class TodoInput extends Component {
   render() {
     return (
       <form className="TodoInput" onSubmit={ this.handleSubmit }>
-        <input type="text" placeholder="Add a ToDo item" value={ this.state.value } onChange={ this.handleChange } />
+        <input
+          type="text"
+          placeholder="Add a ToDo item"
+          value={ this.state.value }
+          onChange={ this.handleChange } />
+
         <button type="submit">
           <i className="fas fa-plus"></i>
         </button>

@@ -49,11 +49,33 @@ class App extends Component {
     .then(response => console.log('Success:', response));
   }
 
+  deleteTodo = (id) => {
+    const newList = this.state.todos.filter(item => {
+      return item.id !== id;
+    });
+
+    this.setState({
+      todos: newList
+    });
+
+    fetch(`/delete-todo/${ id }`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+  }
+
   render() {
     return (
       <div className="App">
         <TodoInput addTodo={ this.addTodo.bind(this) }></TodoInput>
-        <TodoList list={ this.state.todos }></TodoList>
+        <TodoList
+          list={ this.state.todos }
+          deleteTodo={ this.deleteTodo.bind(this) }></TodoList>
       </div>
     );
   }

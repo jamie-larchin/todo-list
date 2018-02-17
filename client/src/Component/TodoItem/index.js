@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './style.css';
 
 class TodoItem extends Component {
+  handleDelete = () => {
+    this.props.deleteTodo(this.props.id);
+  }
+
   render() {
     const todoStatus = this.props.status.replace(/\s+/g, '');
     const todoStatusIcon = (todoStatus === 'NotStarted' ? 'minus' : (todoStatus === 'InProgress' ? 'circle' : 'check'));
@@ -17,7 +21,11 @@ class TodoItem extends Component {
         <div className="Manage">
           <button alt="Increase Status"><i className="fas fa-arrow-up"></i></button>
           <button alt="Decrease Status"><i className="fas fa-arrow-down"></i></button>
-          <button alt="Delete ToDo"><i className="fas fa-times"></i></button>
+          <button
+            alt="Delete Todo"
+            onClick={ this.handleDelete }>
+            <i className="fas fa-times"></i>
+          </button>
         </div>
       </div>
     );
