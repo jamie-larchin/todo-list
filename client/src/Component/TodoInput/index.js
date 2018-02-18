@@ -32,7 +32,10 @@ class TodoInput extends Component {
 
   render() {
     return (
-      <form className="TodoInput" onSubmit={ this.handleSubmit }>
+      <form
+        className={ "TodoInput" + (this.state.description.length ? " Focus" : "") }
+        onSubmit={ this.handleSubmit }>
+
         <input
           type="text"
           name="description"
@@ -49,9 +52,10 @@ class TodoInput extends Component {
           <option value="Completed">Completed</option>
         </select>
 
-        <button type="submit">
+        <button type="submit" disabled={ !this.state.description.length }>
           <i className="fas fa-plus"></i>
         </button>
+
       </form>
     );
   }

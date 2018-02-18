@@ -6,6 +6,10 @@
   border: 1px solid #787878;
 }
 
+.TodoInput.Focus {
+  border-color: #00AE77;
+}
+
 .TodoInput input {
   flex-grow: 1;
   padding: 15px 15px 0;
@@ -43,6 +47,14 @@
   width: 60px;
   cursor: pointer;
   color: #787878;
+}
+
+.TodoInput button[disabled] {
+  cursor: default;
+}
+
+.TodoInput.Focus button {
+  color: #00AE77;
 }
 
 @media (min-width: 480px) {

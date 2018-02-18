@@ -36,6 +36,10 @@
   border-bottom: 1px solid #E1E1E1;
 }
 
+.TodoItem:hover .Description {
+    border-color: #C1C1C1;
+}
+
 .TodoItem .Manage {
   display: flex;
   flex-wrap: wrap;
@@ -47,6 +51,10 @@
   border-top: 1px solid #E1E1E1;
   border-bottom: 1px solid #E1E1E1;
   border-right: 1px solid #E1E1E1;
+}
+
+.TodoItem:hover .Manage {
+    border-color: #C1C1C1;
 }
 
 .TodoItem .Manage button {
@@ -63,6 +71,10 @@
   cursor: default;
 }
 
+.TodoItem .Manage button:not([disabled]):hover {
+  color: #505050;
+}
+
 .TodoItem .Manage button:not([disabled]):hover span {
   opacity: 1;
 }
@@ -73,7 +85,7 @@
   left: calc(50% - (85px/2));
   opacity: 0;
   font-size: 11px;
-  background-color: #787878;
+  background-color: #505050;
   color: #FFF;
   padding: 5px;
   width: 85px;
