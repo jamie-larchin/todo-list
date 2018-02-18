@@ -5,19 +5,29 @@ class TodoInput extends Component {
   constructor() {
     super();
 
-    this.state = { value: '' };
+    this.state = {
+      description: '',
+      status: 'Not Started'
+    };
   }
 
   handleChange = (event) => {
-    this.setState({ value: event.target.value });
+    const input = event.target.name;
+
+    this.setState({
+      [input]: event.target.value
+    });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.props.addTodo(this.state.value);
+    this.props.addTodo(this.state.description, this.state.status);
 
-    this.setState({ value: '' });
+    this.setState({
+      description: '',
+      status: 'Not Started'
+    });
   }
 
   render() {
@@ -25,9 +35,19 @@ class TodoInput extends Component {
       <form className="TodoInput" onSubmit={ this.handleSubmit }>
         <input
           type="text"
+          name="description"
           placeholder="Add a ToDo item"
-          value={ this.state.value }
+          value={ this.state.description }
           onChange={ this.handleChange } />
+
+        <select
+          name="status"
+          value={ this.state.status }
+          onChange={ this.handleChange }>
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
 
         <button type="submit">
           <i className="fas fa-plus"></i>

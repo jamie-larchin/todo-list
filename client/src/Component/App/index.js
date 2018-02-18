@@ -26,11 +26,11 @@ class App extends Component {
     return body;
   };
 
-  addTodo = (description) => {
+  addTodo = (description, status) => {
     const newTodo = {
       description,
       id: this.state.todos.length,
-      status: "Not Started"
+      status
     }
 
     this.setState({

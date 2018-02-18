@@ -55,11 +55,28 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  position: relative;
 }
 
 .TodoItem .Manage button[disabled] {
   color: #E1E1E1;
   cursor: default;
+}
+
+.TodoItem .Manage button:not([disabled]):hover span {
+  opacity: 1;
+}
+
+.TodoItem .Manage span {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: calc(50% - (85px/2));
+  opacity: 0;
+  font-size: 11px;
+  background-color: #787878;
+  color: #FFF;
+  padding: 5px;
+  width: 85px;
 }
 
 @media (min-width: 480px) {

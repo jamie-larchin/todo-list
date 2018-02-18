@@ -30,6 +30,7 @@ class TodoItem extends Component {
             onClick={ this.handleUpdate }
             disabled={ todoStatus === "Completed" }>
             <i className="fas fa-arrow-up"></i>
+            <span>Increase Status</span>
           </button>
 
           <button
@@ -38,12 +39,14 @@ class TodoItem extends Component {
             onClick={ this.handleUpdate }
             disabled={ todoStatus === "NotStarted" }>
             <i className="fas fa-arrow-down"></i>
+            <span>Decrease Status</span>
           </button>
 
           <button
             alt="Delete Todo"
             onClick={ this.handleDelete }>
             <i className="fas fa-times"></i>
+            <span>Delete</span>
           </button>
         </div>
       </div>
