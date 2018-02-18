@@ -51,3 +51,8 @@
   padding: 0;
   cursor: pointer;
 }
+
+.TodoItem .Manage button[disabled] {
+  color: #E1E1E1;
+  cursor: default;
+}

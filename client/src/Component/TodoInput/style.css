@@ -16,6 +16,10 @@
   letter-spacing: .25px;
 }
 
+.TodoInput input::placeholder {
+  color: #E1E1E1;
+}
+
 .TodoInput button {
   border: none;
   font-size: 22px;

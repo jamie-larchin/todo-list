@@ -69,13 +69,54 @@ class App extends Component {
     .then(response => console.log('Success:', response));
   }
 
+  updateTodo = (id, increase) => {
+    let updatedTodos = this.state.todos;
+    const currentStatus = updatedTodos[id].status;
+
+    let newStatus;
+    if(currentStatus === "Not Started") {
+      if(increase) {
+        newStatus = "In Progress";
+      }
+    } else if (currentStatus === "In Progress") {
+      if(increase) {
+        newStatus = "Completed";
+      } else {
+        newStatus = "Not Started";
+      }
+    } else {
+      if(!increase) {
+        newStatus = "In Progress";
+      }
+    }
+
+    updatedTodos[id].status = newStatus;
+
+    this.setState({
+      todos: updatedTodos
+    });
+
+    fetch(`/update-todo/${ id }`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedTodos[id]),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+  }
+
   render() {
     return (
       <div className="App">
         <TodoInput addTodo={ this.addTodo.bind(this) }></TodoInput>
+
         <TodoList
           list={ this.state.todos }
-          deleteTodo={ this.deleteTodo.bind(this) }></TodoList>
+          deleteTodo={ this.deleteTodo.bind(this) }
+          updateTodo= { this.updateTodo.bind(this) }></TodoList>
       </div>
     );
   }

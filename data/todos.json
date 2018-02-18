@@ -1,1 +1,1 @@
-{"todos":[{"id":0,"description":"Create a Todo List app","status":"In Progress"},{"id":1,"description":"Use React","status":"In Progress"},{"id":2,"description":"Create a NodeJS API","status":"In Progress"}]}
+{"todos":[{"id":0,"description":"Create a Todo List app","status":"Not Started"},{"id":1,"description":"Use React","status":"In Progress"},{"id":2,"description":"Create a NodeJS API","status":"Completed"}]}

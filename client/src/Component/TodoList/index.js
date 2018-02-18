@@ -10,7 +10,8 @@ class TodoList extends Component {
         id={ item.id }
         description={ item.description }
         status={ item.status }
-        deleteTodo={ this.props.deleteTodo } />
+        deleteTodo={ this.props.deleteTodo }
+        updateTodo={ this.props.updateTodo } />
     );
 
     return (

@@ -28,7 +28,30 @@ app.post('/create-todo', (request, response) => {
     } else {
       const list = JSON.parse(data);
       list.todos.push(request.fields)
+      const updatedList = JSON.stringify(list);
 
+      fs.writeFile(`${ __dirname }/data/todos.json`, updatedList, (error) => {
+          if(error) {
+            console.log(`Error writing to todos.json: ${ error }`);
+            response.status(500);
+            response.send(error);
+          } else {
+            response.send(request.fields);
+          }
+      });
+    }
+  });
+});
+
+app.put('/update-todo/:id', (request, response) => {
+  fs.readFile(`${ __dirname }/data/todos.json`, (error, data) => {
+    if(error) {
+      console.log(`Error reading todos.json: ${ error }`);
+      response.status(500);
+      response.send(error);
+    } else {
+      const list = JSON.parse(data);
+      list.todos[request.fields.id] = request.fields;
       const updatedList = JSON.stringify(list);
 
       fs.writeFile(`${ __dirname }/data/todos.json`, updatedList, (error) => {
@@ -51,7 +74,7 @@ app.delete('/delete-todo/:id', (request, response) => {
       response.status(500);
       response.send(error);
     } else {
-      let list = JSON.parse(data);
+      const list = JSON.parse(data);
 
       list.todos = list.todos.filter(item => {
         return item.id !== Number(request.params.id);
