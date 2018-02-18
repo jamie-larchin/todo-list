@@ -14,6 +14,7 @@
   font-weight: 300;
   color: #787878;
   letter-spacing: .25px;
+  min-width: 200px;
 }
 
 .TodoInput input::placeholder {
