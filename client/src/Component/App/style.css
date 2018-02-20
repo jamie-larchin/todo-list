@@ -1,7 +1,11 @@
-.App {
+.App section {
   margin: auto;
-  padding: 50px 20px;
+  padding: 0 20px;
   max-width: 768px;
   display: flex;
   flex-direction: column;
+}
+
+.App p {
+  text-align: center;
 }

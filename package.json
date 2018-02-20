@@ -13,6 +13,7 @@
     "mongodb": "^2.2.16"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "firebase": "^4.10.0"
   }
 }

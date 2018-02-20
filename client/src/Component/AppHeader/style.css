@@ -1,0 +1,39 @@
+.AppHeader {
+  background-color: #00AE77;
+  color: #FFFFFF;
+  margin-bottom: 40px;
+}
+
+.AppHeader .Inner {
+  margin: auto;
+  padding: 10px 20px;
+  max-width: 768px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.AppHeader h1 {
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  margin: 0;
+}
+
+.AppHeader span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: .25px;
+}
+
+.AppHeader button {
+  padding: 0;
+  border-color: transparent;
+  background-color: transparent;
+  color: #FFFFFF;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .25px;
+  cursor: pointer;
+}

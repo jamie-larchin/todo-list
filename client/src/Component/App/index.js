@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase, { auth, provider } from '../../firebase.js';
+import AppHeader from '../AppHeader';
 import TodoInput from '../TodoInput';
 import TodoList from '../TodoList';
 import './style.css';
@@ -6,15 +8,24 @@ import './style.css';
 class App extends Component {
   constructor() {
     super();
-    this.state = { todos: [] };
+    this.state = {
+      user: null,
+      todos: []
+    };
   }
 
   componentDidMount() {
     this.callApi()
-      .then(list => {
-        this.setState({ todos: list.todos });
-      })
-      .catch(err => console.log(err));
+    .then(list => {
+      this.setState({ todos: list.todos });
+    })
+    .catch(err => console.log(err));
+
+    auth.onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({ user });
+      }
+    });
   }
 
   callApi = async () => {
@@ -108,15 +119,49 @@ class App extends Component {
     .then(response => console.log('Success:', response));
   }
 
+  login = () => {
+    auth.signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      this.setState({
+        user
+      });
+    });
+  }
+
+  logout = () => {
+    auth.signOut()
+    .then(() => {
+      this.setState({
+        user: null
+      });
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <TodoInput addTodo={ this.addTodo.bind(this) }></TodoInput>
+        <AppHeader
+          user={ this.state.user }
+          login={ this.login.bind(this) }
+          logout={ this.logout.bind(this) }></AppHeader>
 
-        <TodoList
-          list={ this.state.todos }
-          deleteTodo={ this.deleteTodo.bind(this) }
-          updateTodo= { this.updateTodo.bind(this) }></TodoList>
+        <section>
+          <TodoInput
+            user={ this.state.user }
+            addTodo={ this.addTodo.bind(this) }></TodoInput>
+
+          { this.state.user ?
+            (
+              <TodoList
+                list={ this.state.todos }
+                deleteTodo={ this.deleteTodo.bind(this) }
+                updateTodo= { this.updateTodo.bind(this) }></TodoList>
+            ) : (
+              <p>Please login to start adding items to your Todo List.</p>
+            )
+          }
+        </section>
       </div>
     );
   }
