@@ -19,7 +19,7 @@ app.get('/get-todos', (request, response) => {
   });
 });
 
-app.post('/create-todo', (request, response) => {
+app.post('/:user/create-todo', (request, response) => {
   fs.readFile(`${ __dirname }/data/todos.json`, (error, data) => {
     if(error) {
       console.log(`Error reading todos.json: ${ error }`);
@@ -27,7 +27,18 @@ app.post('/create-todo', (request, response) => {
       response.send(error);
     } else {
       const list = JSON.parse(data);
-      list.todos.push(request.fields)
+      let userIndex = list.todos.findIndex(todo => todo.user === request.params.user);
+
+      if(userIndex === -1) {
+        userIndex = list.todos.length;
+
+        list.todos[userIndex] = {
+          "user": request.params.user,
+          "body": []
+        }
+      }
+
+      list.todos[userIndex].body.push(request.fields);
       const updatedList = JSON.stringify(list);
 
       fs.writeFile(`${ __dirname }/data/todos.json`, updatedList, (error) => {
@@ -43,7 +54,7 @@ app.post('/create-todo', (request, response) => {
   });
 });
 
-app.put('/update-todo/:id', (request, response) => {
+app.put('/:user/update-todo/:id', (request, response) => {
   fs.readFile(`${ __dirname }/data/todos.json`, (error, data) => {
     if(error) {
       console.log(`Error reading todos.json: ${ error }`);
@@ -51,7 +62,8 @@ app.put('/update-todo/:id', (request, response) => {
       response.send(error);
     } else {
       const list = JSON.parse(data);
-      list.todos[request.fields.id] = request.fields;
+      const userIndex = list.todos.findIndex(todo => todo.user === request.params.user);
+      list.todos[userIndex].body[request.params.id] = request.fields;
       const updatedList = JSON.stringify(list);
 
       fs.writeFile(`${ __dirname }/data/todos.json`, updatedList, (error) => {
@@ -67,7 +79,7 @@ app.put('/update-todo/:id', (request, response) => {
   });
 });
 
-app.delete('/delete-todo/:id', (request, response) => {
+app.delete('/:user/delete-todo/:id', (request, response) => {
   fs.readFile(`${ __dirname }/data/todos.json`, (error, data) => {
     if(error) {
       console.log(`Error reading todos.json: ${ error }`);
@@ -75,8 +87,9 @@ app.delete('/delete-todo/:id', (request, response) => {
       response.send(error);
     } else {
       const list = JSON.parse(data);
+      const userIndex = list.todos.findIndex(todo => todo.user === request.params.user);
 
-      list.todos = list.todos.filter(item => {
+      list.todos[userIndex].body = list.todos[userIndex].body.filter(item => {
         return item.id !== Number(request.params.id);
       });
 

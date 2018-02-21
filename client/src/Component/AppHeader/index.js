@@ -12,9 +12,9 @@ class AppHeader extends Component {
               (
                 <div>
                   <span>Welcome, { this.props.user.displayName } | </span>
-                  <button onClick={ this.props.logout }>Log Out</button>
+                  <button onClick={ this.props.logout }>Logout</button>
                 </div>
-              ) : (<button onClick={ this.props.login }>Log In</button>)
+              ) : (<button onClick={ this.props.login }>Login with Gmail</button>)
             }
         </div>
       </div>

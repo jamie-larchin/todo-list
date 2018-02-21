@@ -15,15 +15,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.callApi()
-    .then(list => {
-      this.setState({ todos: list.todos });
-    })
-    .catch(err => console.log(err));
-
     auth.onAuthStateChanged((user) => {
       if(user) {
         this.setState({ user });
+
+        this.callApi()
+        .then(list => {
+          const userIndex = list.todos.findIndex(todo => todo.user === user.uid);
+
+          if(userIndex !== -1) {
+            const userList = list.todos[userIndex].body;
+            this.setState({ todos: userList });
+          }
+        })
+        .catch(err => console.log(err));
       }
     });
   }
@@ -48,7 +53,7 @@ class App extends Component {
       todos: this.state.todos.concat( [newTodo] )
     });
 
-    fetch('/create-todo', {
+    fetch(`${ this.state.user.uid }/create-todo`, {
       method: 'POST',
       body: JSON.stringify(newTodo),
       headers: new Headers({
@@ -69,7 +74,7 @@ class App extends Component {
       todos: newList
     });
 
-    fetch(`/delete-todo/${ id }`, {
+    fetch(`${ this.state.user.uid }/delete-todo/${ id }`, {
       method: 'DELETE',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -81,25 +86,15 @@ class App extends Component {
   }
 
   updateTodo = (id, increase) => {
-    let updatedTodos = this.state.todos;
-    const currentStatus = updatedTodos[id].status;
+    const updatedTodos = this.state.todos;
 
-    let newStatus;
-    if(currentStatus === "Not Started") {
-      if(increase) {
-        newStatus = "In Progress";
-      }
-    } else if (currentStatus === "In Progress") {
-      if(increase) {
-        newStatus = "Completed";
-      } else {
-        newStatus = "Not Started";
-      }
-    } else {
-      if(!increase) {
-        newStatus = "In Progress";
-      }
-    }
+    const notStarted = updatedTodos[id].status === "Not Started";
+    const inProgress = updatedTodos[id].status === "In Progress";
+    const completed = updatedTodos[id].status === "Completed";
+
+    const newStatus = notStarted && !increase ? "Not Started"
+      : ((notStarted && increase) || (completed && !increase) ? "In Progress"
+      : (inProgress && increase ? "Completed" : ""));
 
     updatedTodos[id].status = newStatus;
 
@@ -107,7 +102,7 @@ class App extends Component {
       todos: updatedTodos
     });
 
-    fetch(`/update-todo/${ id }`, {
+    fetch(`${ this.state.user.uid }/update-todo/${ id }`, {
       method: 'PUT',
       body: JSON.stringify(updatedTodos[id]),
       headers: new Headers({
@@ -123,9 +118,7 @@ class App extends Component {
     auth.signInWithPopup(provider)
     .then((result) => {
       const user = result.user;
-      this.setState({
-        user
-      });
+      this.setState({ user });
     });
   }
 
